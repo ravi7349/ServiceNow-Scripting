@@ -50,3 +50,93 @@ function onLoad() {
 // the Number and Priority fields are set to read-only to prevent changes,
 // and the Configuration Item field is hidden.
 // This improves data accuracy and user experience while protecting system-generated data.
+
+
+
+// Scneria Based
+
+// Question 1 (Beginner – OnLoad):
+
+// Write a Client Script that shows a popup message saying "Welcome, this form is used for logging incidents" only when a new incident record is created.
+
+function onLoad() {
+    if (g_form.isNewRecord()) {
+        alert("Welcome, this form is used for logging incidents");
+    }
+}
+
+
+// Question 2 (Intermediate – onLoad)
+
+// When the incident form loads, if the priority is 1 (Critical),
+// show an alert message:
+
+// “High Priority Incident — Please address immediately.”
+
+
+function onLoad() {
+   var pri = g_form.getValue('priority');
+   if (pri == '1') {
+       alert("High Priority Incident — Please address immediately.");
+   }
+}
+
+
+// When the incident form loads,
+// if the category is “network”, then:
+
+// Automatically set the assignment group to “Network Team”.
+
+// Show a message:
+
+// “Incident assigned to Network Team automatically.”
+
+function onLoad() {
+   var cat = g_form.getValue('category');
+   if(cat=='network'){
+	g_form.setValue('assignment_group','Network');
+	g_form.addInfoMessage("Incident assigned to Network Team automatically");
+   }
+   
+}
+
+// Question 4 (onLoad – Real-Time Scenario):
+
+// When the incident form loads,
+// if the caller is a VIP user, then:
+
+// Show an alert message:
+
+// “⚠️ Caller is VIP – handle this incident with priority!”
+
+// Set the impact and urgency fields both to 1 (High).
+
+// Make both of these fields read-only so users can’t change them.
+
+function onLoad() {
+   g_form.getReference('caller_id', function(caller) {
+       if (caller.vip == true) {
+           alert("⚠️ Caller is VIP – handle this incident with priority!");
+           g_form.setValue('impact', 1);
+           g_form.setValue('urgency', 1);
+           g_form.setReadOnly('impact', true);
+           g_form.setReadOnly('urgency', true);
+       }
+   });
+}
+
+
+// When the incident form loads,
+// if the short description field is empty,
+// then automatically fill it with this text:
+
+// “Short description not provided – please update before saving.”
+
+function onLoad() {
+   var sd = g_form.getValue('short_description');  // get the current value
+   if (sd == '') {  // check if it's empty
+      g_form.setValue('short_description', 'Short description not provided – please update before saving.');
+      g_form.addInfoMessage('Short description field was empty. Please update it.');
+   }
+}
+
