@@ -105,3 +105,86 @@ while(inc.next()){
 }
 
 
+
+// You need to fetch all incidents assigned to the “Network Support” group
+// and created today, then print the incident number, assignment group name, and created time.
+
+// 🧠 Hint: You’ll use gs.beginningOfToday() and gs.endOfToday() for the date filter.
+
+var inc = new GlideRecord('incident');
+inc.addQuery('Assignment_group.name','Network_Support');
+inc.addQuery('sys_created_on', '>=',gs.beginningofToday());
+inc.query();
+while(inc.next()){
+    gs.print(gs.number+" "+gs.assignment_group.name+" "+Created_time);
+}
+
+
+// You need to find all incidents created more than 30 days ago (older ones)
+// and set them as inactive (active = false).
+
+var inc = new GlideRecord('incident');
+inc.addQuery('sys_created_on', '<', gs.daysAgoStart(30));
+inc.query();
+while(inc.next()){
+    inc.setvalue('active',false);
+    inc.update();
+    gs.print(inc.number());
+}
+
+
+//You need to delete all incidents where the short_description field is empty or null.
+
+
+var inc = new GlideRecord('incident');
+inc.addNullQuery('short_description'); // find records with empty short description
+inc.query();
+
+while (inc.next()) {
+    gs.print("Deleting Incident: " + inc.number);
+    inc.deleteRecord(); // delete the record
+}
+
+
+
+// Question 6: Fetch incidents where caller is VIP next?
+
+var inc = new GlideRecord('incident');
+inc.query();
+while(inc.next()){
+    if(inc.caller_id.vip==true){
+        gs.print(inc.number)
+    }
+}
+
+// Question 7:
+
+// Write a script to fetch all incidents that are not assigned to any user
+// (that means the field assigned_to is empty or null).
+
+// Print their incident number and short description.
+
+var inc = new GlideRecord('incident');
+inc.addNullQuery('assigned_to');
+inc.query();
+while(inc.next()){
+    gs.print(inc.number);
+}
+
+var userId = this.getparameter('sysparm_user');
+var user = new GlideRecord('sys_user');
+user.get(userId);
+if(user.manager){
+    returnuser.manager;
+}
+else{
+    return 'No mamager ssigned';
+}
+
+var ga = new GlideRecord('Getmanager');
+gs.addparam('sysparam','sys_user');
+ga.addparam('sysparam',newvalue)
+ga.addXmlanswer(function(response){
+    gs.print(response)
+})
+)

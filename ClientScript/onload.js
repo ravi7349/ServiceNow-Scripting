@@ -112,7 +112,7 @@ function onLoad() {
 // Set the impact and urgency fields both to 1 (High).
 
 // Make both of these fields read-only so users can’t change them.
-
+// if u want to get the caller_if need to use the getRefrence and function(caller)
 function onLoad() {
    g_form.getReference('caller_id', function(caller) {
        if (caller.vip == true) {

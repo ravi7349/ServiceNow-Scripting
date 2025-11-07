@@ -22,3 +22,67 @@ function onSubmit() {
 // 👉 “Are you submitting priority 1 ticket?”
 // If they click OK → submits,
 // If they click Cancel → stops submission.
+
+// Imagine a situation where users sometimes forget to fill in the short description field before submitting an incident.
+// We want to stop the form submission and show an alert if that field is empty.
+
+// How would you do that using an onSubmit client script?
+
+
+function onSubmit() {
+   var pri = g_form.getValue('short_description');
+   if(pri ==''){
+	alert('Please fill the short Description');
+   }
+   
+}
+
+
+// “Suppose you’re on the Incident form, and the rule is —
+// if Priority = 1 (High) but Description is empty,
+// then the form should not be submitted.
+
+// Show an alert message:
+
+// ‘Description is mandatory for high-priority incidents.’
+
+function onSubmit() {
+   var pri = g_form.getValue('priority');
+   var desc = g_form.getValue('description');
+
+   if (pri == '1' && desc == '') {
+      alert('Description is mandatory for high-priority incidents.');
+      return false;  // stops the form from submitting
+   }
+
+   return true; // allow submission otherwise
+}
+
+
+
+// “Assume on the Incident form,
+// if the Category is set to ‘Hardware’,
+// but the Subcategory is not selected (left empty),
+// the user should not be allowed to submit the form.
+
+// Show an alert message:
+
+// ‘Please select a Subcategory for Hardware incidents.’
+
+// How would you write that using an onSubmit client script?”
+
+
+
+function onSubmit() {
+   //Type appropriate comment here, and begin script below
+   var cat = g_form.getValue('category');
+   var subcat = g_form.getValue('subcategory');
+
+   if(cat=='hardware'&& subcat==''){
+	alert("Please select a Subcategory for Hardware incidents.");
+	false;
+   }
+   true;
+   
+   
+}
