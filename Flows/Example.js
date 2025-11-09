@@ -1,0 +1,1 @@
+//When an incident is created and the category is ‘Network’, then the assignment group should automatically be set to the Network group.”
