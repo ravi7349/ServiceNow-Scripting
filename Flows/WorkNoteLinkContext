@@ -1,0 +1,5 @@
+Add a work note containing the task link in the flow.
+
+trigger -- when incidnet is created
+
+action -- click on worknote content link and acticvate

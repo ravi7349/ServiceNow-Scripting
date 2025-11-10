@@ -1,0 +1,109 @@
+Step-by-Step (Flow Designer)
+
+Go to Flow Designer
+
+Search: Flow Designer
+
+Open it.
+
+Create New Flow
+
+Click New
+
+Name: Send Email on Catalog Item Submit
+
+Click Create.
+
+Select Trigger
+
+Click Add Trigger
+
+Choose: Service Catalog
+
+Then choose: Requested Item
+
+Choose event: Created
+
+Click Done
+
+Add Condition (Optional but useful)
+If you want this only for one catalog item:
+
+Click Add Condition
+
+Condition: Catalog Item → is → Your Catalog Item Name
+
+Add Action
+
+Click + Add Action
+
+Select Send Email
+
+Fill Email Details
+
+To: Choose Requested for (from Data Panel)
+
+Data Panel → Requested Item → Requested for → Email
+
+Subject: Write a subject (Ex: Your Request Received)
+
+Body:
+
+Type your email message.
+
+To insert a variable from catalog item:
+
+Right side Data Panel
+
+Expand: Requested Item
+
+Expand: Variables
+
+Click your variable (Example: User_Message)
+
+It will insert something like: {{Requested Item.Variables.User_Message}}
+
+Example Body:
+
+Hello,
+
+Your request has been submitted.
+Details: {{Requested Item.Variables.User_Message}}
+
+Thank you.
+
+
+Save
+
+Click Save (top right)
+
+Turn On Flow
+
+Click Turn On
+
+Testing
+
+Go to Service Catalog
+
+Open Your Catalog Item
+
+Click Order Now
+
+Fill variable value
+
+Submit
+
+Then:
+6. Check Email (Requested for user email inbox)
+
+Where to Check Result
+
+Flow Designer → Open your flow → Executions
+
+You will see each run → click → you can see:
+
+Trigger
+
+Variable values
+
+Email details
