@@ -38,3 +38,13 @@ restmessage.setRequestBody(JSON.stringify(body));
 var response = restmessage.execute();
 var responsebody = response.getBody();
 gs.info(responsebody);
+
+
+//delete method 
+
+var r = new sn_ws.RESTMessageV2();
+r.setHttpMethod('delete');
+r.setEndpoint('https://jsonplaceholder.typicode.com/posts/2');
+var response = r.execute();
+var status= response.getStatusCode();
+gs.info("succesfully deleted"+status);

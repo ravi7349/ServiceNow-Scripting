@@ -1,42 +1,35 @@
-// Scenario 1 — Get Manager Name of Logged-in User
 
-// 🧩 Question (interview-style):
+// script incldue
+var getDepaWithCaller = Class.create();
+getDepaWithCaller.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+	getDept :function(){
+		var Userid = this.getParameter('sysparm_caller_id');
+		var gr = new GlideRecord('sys_user');//storing sys_user details like all //data in the gr and filtering the data
+		gr.addQuery('sys_id',Userid);
+		gr.query();
+		while(gr.next()){
+			return gr.department.getDisplayValue();
 
-// In ServiceNow, when a user opens the Incident form, we want to automatically show the logged-in user’s Manager name in an info message.
+		}
+	},
 
-// How can you do this using GlideAjax?
 
-
-// Step 1: Script Include
-
-// Name: UserDetailsUtil
-// Client Callable: ✅ Yes
-
-var UserDetailsUtil = Class.create();
-UserDetailsUtil.prototype = Object.extendsObject(AbstractAjaxProcessor, {
-
-    getManagerName: function() {
-        var userId = gs.getUserID();  // get current logged-in user
-        var user = new GlideRecord('sys_user');
-        user.get(userId);
-
-        if (user.manager)
-            return user.manager.getDisplayValue(); // return manager name
-        else
-            return 'No manager assigned';
-    }
-
+    type: 'getDepaWithCaller'
 });
 
-//✅ Step 2: Client Script
 
-//Type: onLoad
-//Table: Incident
+// Client Script
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
 
-function onLoad() {
-    var ga = new GlideAjax('UserDetailsUtil'); // Script Include name
-    ga.addParam('sysparm_name', 'getManagerName'); // function name
-    ga.getXMLAnswer(function(answer) {
-        g_form.addInfoMessage('Your Manager: ' + answer);
-    });
+   var ga = new GlideAjax('getDepaWithCaller');
+   ga.addParam('sysparm_name','getDept');//used to callthe function in scriptinc
+   ga.addParam('sysparm_caller_id',g_form.getValue('caller_id')); //used to pass data to script incldue
+   ga.getXMLAnswer(function(response){
+	g_form.setValue("u_department_column", response);
+   });
+
+   
 }
