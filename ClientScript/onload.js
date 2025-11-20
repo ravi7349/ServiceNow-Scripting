@@ -121,6 +121,9 @@ function onLoad() {
            g_form.setValue('urgency', 1);
            g_form.setReadOnly('impact', true);
            g_form.setReadOnly('urgency', true);
+           g_form.getReference('caller_id',function(caller){
+            
+           })
        }
    });
 }
