@@ -81,3 +81,92 @@ while(gr.next()){
 	gr.update();
 	gs.info('Updated succefully');
 }
+
+// Fetch all incidents that are either assigned to the current user or created by them 
+// and print Number and Short Description 
+
+
+var ga  = new GlideRecord('incident');
+ga.addQuery('assigned_to',gs.getUserID()).addOrCondition('sys_created_by',gs.getUserName());
+
+ga.query();
+while(ga.next()){
+	gs.info(ga.number+"  "+ga.short_description);
+}
+// 9. Close all incidents older than 30 days with priority 4 and update the close notes.
+var ga  = new GlideRecord('incident');
+ga.addActiveQuery();
+ga.addQuery('sys_created_on','<=',gs.daysAgoStart(30));
+ga.query();
+while(ga.next()){
+	ga.state = 7;
+	ga.close_notes = "Hello worlddd";
+	ga.update();
+	gs.info("Created succufully");
+}
+
+// 9. Close all incidents older than 30 days with priority 4 and update the close notes.
+var ga  = new GlideRecord('incident');
+ga.addActiveQuery();
+ga.addQuery('sys_created_on','<=',gs.daysAgoStart(30));
+ga.addQuery('priority',4);
+ga.query();
+while(ga.next()){
+	ga.state = 7;
+	ga.close_notes = "Hello worlddd";
+	ga.update();
+	gs.info("Created succufully");
+}
+
+
+// 1. Get Active Incidents Assigned to a Specific Group
+var ga  = new GlideRecord('incident');
+ga.addActiveQuery();
+ga.addQuery('assignment_group.name','Network');
+ga.query();
+var ga1 = ga.getRowCount();
+gs.info("No of incidnets are"+ ga1);
+
+
+while(ga.next()){
+	gs.info(ga.number+"   "+ ga.short_description);
+	
+}
+
+// 2. Find Users Without an Email Address
+var ga = new GlideRecord('incident');
+ga.addNullQuery('caller_id.email');
+
+
+ga.query();
+var ga1 = ga.getRowCount();
+gs.print(ga1);
+while(ga.next()){
+	gs.info(ga.number);
+}
+// FINAL SIMPLE FORMULA
+// 🔵 Use >= when requirement says "LAST", "FROM", "SINCE"
+// 🔴 Use < when requirement says "OLDER THAN", "BEFORE", "PAST"
+// 3. Get All Changes in the Last 30 Days
+var ga = new GlideRecord('change_request');
+ga.addQuery('sys_updated_on','>=',gs.daysAgoStart(30));
+ga.query();
+while(ga.next()){
+	gs.info(ga.number);
+}
+
+// 4. List All Incidents with Related Problem Records
+var ga = new GlideRecord('incident');
+ga.addNotNullQuery('problem_id');
+ga.query();
+while(ga.next()){
+	gs.info(ga.number);
+}
+
+// 5. Fetch Catalog Requests with Items Costing More Than ₹10,000
+var ga = new GlideRecord('sc_req_item');
+ga.addQuery('price','>',10);
+ga.query();
+while(ga.next()){
+	gs.info(ga.number);
+}

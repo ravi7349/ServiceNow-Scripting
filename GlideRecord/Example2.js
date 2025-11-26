@@ -219,3 +219,37 @@ ga.query();
 while(ga.next()){
 	gs.info(ga.number+" "+ ga.caller_id.getDisplayValue());
 }
+
+// 6. Find All Incidents Created by VIP Users
+var gr = new GlideRecord('incident');
+gr.addQuery('caller_id.vip',true);
+gr.query();
+while(gr.next()){
+	gs.info(gr.number);
+}
+
+// 7. Get Users Who Logged in Last 7 Days
+var ga = new GlideRecord('sys_user');
+ga.addQuery('last_login_time','>=',gs.daysAgoStart(7));
+ga.query();
+while(ga.next()){
+	gs.info(ga.name);
+}
+
+// 8. Retrieve Open Tasks Older Than 10 Days
+var ga = new GlideRecord('task');
+ga.addActiveQuery();
+ga.addQuery('sys_created_on','<',gs.daysAgoStart(10));
+ga.query();
+while(ga.next()){
+	gs.info(ga.number);
+}
+
+// 9. Get Change Requests with 'Risk' = 'High' and State = 'Scheduled'
+var ga = new GlideRecord('change_request');
+ga.addQuery('risk','High');
+ga.addQuery('state',4);
+ga.query();
+while(ga.next()){
+	gs.info(ga.number);
+}

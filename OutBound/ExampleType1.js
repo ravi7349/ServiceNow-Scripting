@@ -12,14 +12,14 @@ gs.info("Random Chuck Norris joke: " + responseObj.value);
 
 
 // second Methodd get method
+var restMessage  = new sn_ws.RESTMessageV2();     // Create a new REST API request
+restMessage.setHttpMethod('get');                 // Set method to GET (to fetch data)
+restMessage.setEndpoint('https://api.chucknorris.io/jokes/random'); // Set the API URL
+var response = restMessage.execute();             // Send the request and get the response
+var responsebody = response.getBody();            // Get the data returned by the API
+var statuscode = response.getStatusCode();        // Get the status code (like 200)
+gs.info("Status code " + statuscode + " responseBody " + responsebody); // Print output in logs
 
-var restMessage  = new sn_ws.RESTMessageV2();
-restMessage.setHttpMethod('get');
-restMessage.setEndpoint('https://api.chucknorris.io/jokes/random');
-var response = restMessage.execute();
-var responsebody = response.getBody();
-var statuscode = response.getStatusCode();
-gs.info("Status code"+ statuscode +" "+ "responseBody" + responsebody);
 
 
 // Post method

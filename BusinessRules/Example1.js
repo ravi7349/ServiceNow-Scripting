@@ -21,3 +21,19 @@ if (!current.parent_incident) {
     child.short_description = current.short_description + "( Descriptionn)";
     child.insert();
 }
+
+
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	for( var i = 1;i<=3;i++){
+		if(!current.parent_incident){
+		var child = new GlideRecord('incident');
+		child.initialize();
+		child.parent_incident = current.sys_id;
+		child.short_description = current.short_description+ "-child"+i;
+		child.insert();
+	}
+	}
+
+})(current, previous);

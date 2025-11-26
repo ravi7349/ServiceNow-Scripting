@@ -26,7 +26,7 @@ while(ga.next()){
 // Hint: Use gs.daysAgoStart(1) or gs.nowDateTime() to compare timestamps.
 
 var ga = new GlideRecord('incident');
-ga.addQuery('sys_created_on','<',gs.daysAgoStart(1));
+ga.addQuery('sys_updated_on','>=',gs.daysAgoStart(1));
 ga.query();
 while(ga.next()){
 	gs.info(ga.number);
@@ -108,14 +108,6 @@ while(gr.next()){
 }
 
 
-
-var gr = new GlideAggregate('incident');
-gr.addQuery('state','=',7);
-gr.addAggregate('COUNT');
-gr.groupBy('priority');
-
-
-
 // GlideAggregate Challenges
 // 7. Count Open Incidents by Priority
 // Challenge:
@@ -123,6 +115,10 @@ gr.groupBy('priority');
 // Print output like:
 // Priority 1: 5
 // Priority 2: 23
+var gr = new GlideAggregate('incident');
+gr.addQuery('state','!=',7);
+gr.addAggregate('COUNT');
+gr.groupBy('priority');
 while(gr.next()){
 	var priority  = gr.getValue('priority');
 	var count = gr.getAggregate('COUNT');

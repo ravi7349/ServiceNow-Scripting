@@ -33,3 +33,40 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
 
    
 }
+
+// To get active callers per particular id
+function onLoad() {
+   //Type appropriate comment here, and begin script below
+   var user = g_form.getValue('caller_id');
+   if(!user) return;
+   var gr= new GlideRecord('incident');
+   gr.addQuery('caller_id',user);
+   gr.addQuery('active',true);
+   gr.query();
+
+   g_form.addInfoMessage("There are"+ gr.getRowCount()+ "Cases for"+ g_form.getDisplayValue('caller_id'));
+   
+}
+
+// for delgations
+function onLoad() {
+   //Type appropriate comment here, and begin script below
+   var user = g_form.getValue('caller_id');
+   if(! user) return;
+
+   var gr = new GlideRecord('sys_user_delegate');
+   gr.addQuery('user',user);
+   gr.addQuery('active',true);
+   gr.query();
+
+   if(gr.next()){
+	var user1 = g_form.getDisplayValue('caller_id');
+	var delegateto = gr.getDisplayValue('delegate');
+	g_form.addInfoMessage(user1 +" Has Delegation Name"+ delegateto);
+
+   }
+   else{
+	g_form.addInfoMessage('No delegations');
+   }
+   
+}

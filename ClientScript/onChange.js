@@ -22,7 +22,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
 // Field Name: priority
 // ✔ Code:
 
-// When priority changes to 1 the number field sholud goes to red color
+// When priority changes to 1 the number field sholud goes to red color 
 function onChange(control, oldValue, newValue, isLoading) {
 
     if (isLoading) return;
@@ -35,4 +35,16 @@ function onChange(control, oldValue, newValue, isLoading) {
         // Reset color
         g_form.getControl('number').style.backgroundColor = '';
     }
+}
+
+//Delete incidnets when impact and urgency are null
+var inc = new GlideRecord('incident');
+inc.addNullQuery('impact');
+inc.addNullQuery('urgency');
+var gd = new GlideDateTime();
+gd.addDays(-7);
+inc.addQuery('sys_created_on','<=',gd);
+inc.query();
+while(inc.next()){
+	inc.deleteRecord();
 }
