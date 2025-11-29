@@ -28,3 +28,20 @@ function onLoad() {
 // 	• setMandatory() → makes fields required.
 // 	• setDisabled() → makes fields read-only.
 // 	• setDisplay() → hides a field from the form.
+
+
+//if state chnage to closed if the workNotes isnot filled dont let him to submit
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+   if(g_form.getValue('state')=='7' && g_form.getValue('work_notes')==''){
+	alert("please fill the worknotes");
+	g_form.setValue('state',previousValue);
+
+   }
+
+   //Type appropriate comment here, and begin script below
+   
+}

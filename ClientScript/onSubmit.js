@@ -86,3 +86,17 @@ function onSubmit() {
    
    
 }
+//if state is chnaging to close see if thhe sd is filled or not
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+   if(newValue=='7'&& g_form.getValue('work_notes')==''){
+	alert("plase fill the worknotes");
+	g_form.setValue('state',oldValue);
+   }
+
+   //Type appropriate comment here, and begin script below
+   
+}

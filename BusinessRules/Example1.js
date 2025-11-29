@@ -9,6 +9,8 @@ if(current.work_notes.changes()){
 	child.query();
 	while(child.next()){
 		child.work_notes.setJournalEntry(current.work_notes);
+
+		
         
 	}
 }
@@ -34,6 +36,37 @@ if (!current.parent_incident) {
 		child.short_description = current.short_description+ "-child"+i;
 		child.insert();
 	}
+	}
+
+})(current, previous);
+
+
+Scenario:
+
+// You want to display a message when Priority becomes P1.
+
+// ❌ Wrong Business Rule:
+if (current.priority == 1) {
+    gs.addInfoMessage("P1 ticket");  
+    current.update();   // ❌ this is the problem
+}
+if(current.priority==1){
+	gs.addInfoMessage("hllo there");
+	current.update();
+}
+
+// What will happen?
+// User updates the record
+// BR runs → message displayed → update() is called
+// update() saves the record again → BR runs again
+// BR runs again → message again → update() again
+// This becomes infinite loop
+
+// if the priority chnages to 1 set assignement group
+(function executeRule(current, previous /*null when async*/) {
+
+	if(current.priority.changesTo('1')){
+		current.assignment_group = '019ad92ec7230010393d265c95c260dd';
 	}
 
 })(current, previous);
