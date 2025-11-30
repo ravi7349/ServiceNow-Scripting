@@ -1,5 +1,5 @@
 
-//2nd Type // Scripted rest Api
+//2nd Type // Scripted rest Api //post
 
 (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
  
@@ -17,6 +17,28 @@
 })(request, response);
 // here i need to clikc on explore rest api and need to give the exact values there and the data
 
+//Get
+(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    var gr = new GlideRecord('incident');
+    gr.get('number', request.pathParams.number);
+    if (gr.isValidRecord()) {
+        return {
+            number: gr.number.toString(),
+            short_description: gr.short_description.toString(),
+            state: gr.state.toString()
+
+        };
+    } else {
+
+        return {
+            Error: "record not found"
+        };
+    }
+
+
+    // implement resource here
+
+})(request, response);
 
 
 //Soap method

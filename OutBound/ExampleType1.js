@@ -35,6 +35,7 @@ var body = {
     "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
   };
 restmessage.setRequestBody(JSON.stringify(body));
+
 var response = restmessage.execute();
 var responsebody = response.getBody();
 gs.info(responsebody);

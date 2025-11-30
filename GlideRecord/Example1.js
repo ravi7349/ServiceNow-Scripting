@@ -140,6 +140,15 @@ while(ga.next()){
 }
 gs.print('Reolved');
 
+// State & Priority Numbers (Side-by-Side Table)
+// State	Number	Priority	Number
+// New	1	Critical	1
+// In Progress	2	High	2
+// On Hold	3	Moderate	3
+// Resolved	6	Low	4
+// Closed	7	Planning	5
+// Canceled	8	—	—
+
 
 
 

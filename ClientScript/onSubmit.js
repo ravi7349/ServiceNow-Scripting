@@ -100,3 +100,12 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
    //Type appropriate comment here, and begin script below
    
 }
+
+//Make the Description field read-only only for non-admin users.
+function onLoad() {
+   //Type appropriate comment here, and begin script below
+   if(!g_user.hasRole('admin')){
+	g_form.setReadOnly('description',false);
+   }
+   
+}

@@ -132,6 +132,28 @@ while(ga.next()){
 	gs.info(ga.number+"   "+ ga.short_description);
 	
 }
+// assignment_group.name        → Get the Assignment Group's Name
+// assignment_group.manager     → Get the Manager of that group
+
+// caller_id.name               → Get the Caller’s Name
+// caller_id.email              → Get the Caller’s Email
+// caller_id.phone              → Get the Caller’s Phone
+
+// assigned_to.name             → Get the Assignee’s Name
+// assigned_to.email            → Get the Assignee’s Email
+// assigned_to.department       → Get the Assignee's Department
+
+// location.city                → Get the City of the Location
+// location.country             → Get the Country of the Location
+
+// u_requested_for.name         → Get Requested For person's Name
+// u_requested_for.email        → Get Requested For person's Email
+
+// opened_by.name               → Get the user who opened the record
+// opened_by.company            → Get that user’s Company
+
+// category.manager             → Get the manager of the selected Category
+
 
 // 2. Find Users Without an Email Address
 var ga = new GlideRecord('incident');
@@ -145,7 +167,7 @@ while(ga.next()){
 	gs.info(ga.number);
 }
 // FINAL SIMPLE FORMULA
-// 🔵 Use >= when requirement says "LAST", "FROM", "SINCE"
+// 🔵 Use >= when requirement says "LAST", "FROM", "SINCE"(LFS)
 // 🔴 Use < when requirement says "OLDER THAN", "BEFORE", "PAST"
 // 3. Get All Changes in the Last 30 Days
 var ga = new GlideRecord('change_request');
