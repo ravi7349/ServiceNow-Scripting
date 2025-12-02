@@ -15,6 +15,13 @@
         sys_id: sys_id
     };
 })(request, response);
+
+ // Using response parameter
+    response.setStatus(201);   // Optional: status code
+    response.setBody({
+        message: "Incident created successfully",
+        sys_id: sys_id
+    });
 // here i need to clikc on explore rest api and need to give the exact values there and the data
 
 

@@ -9,11 +9,8 @@ if(current.work_notes.changes()){
 	child.query();
 	while(child.next()){
 		child.work_notes.setJournalEntry(current.work_notes);
-
-		
-        
 	}
-}
+} 
 // 3. Whenever a new Incident is created, the system should automatically create two child
 // incidents linked to it.
 
@@ -67,6 +64,25 @@ if(current.priority==1){
 
 	if(current.priority.changesTo('1')){
 		current.assignment_group = '019ad92ec7230010393d265c95c260dd';
+	}
+
+})(current, previous);
+
+
+
+//When the parent state closes try to change the state in child 
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your
+	if(current.state.changes()&&current.state==7){
+		var child = new GlideRecord('incident');
+		child.addQuery('parent_incident','current.sys_id');
+		child.query();
+		while(child.next()){
+			child.state = 7;
+			child.work_notes = "Closing because of changing the parent incident";
+			child.update();
+		}
 	}
 
 })(current, previous);

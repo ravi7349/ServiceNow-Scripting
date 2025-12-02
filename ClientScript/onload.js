@@ -116,7 +116,7 @@ function onLoad() {
 function onLoad() {
    g_form.getReference('caller_id', function(caller) {
        if (caller.vip == true) {
-           alert("⚠️ Caller is VIP – handle this incident with priority!");
+           alert("Caller is VIP – handle this incident with priority!");
            g_form.setValue('impact', 1);
            g_form.setValue('urgency', 1);
            g_form.setReadOnly('impact', true);

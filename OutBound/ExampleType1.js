@@ -11,6 +11,7 @@ var responseObj = JSON.parse(responseBody);
 gs.info("Random Chuck Norris joke: " + responseObj.value);
 
 
+
 // second Methodd get method
 var restMessage  = new sn_ws.RESTMessageV2();     // Create a new REST API request
 restMessage.setHttpMethod('get');                 // Set method to GET (to fetch data)

@@ -171,6 +171,8 @@ while(ga.next()){
 // Print all three values.
 
 var ga = new GlideAggregate('incident');
+ga.groupBy('priority');
+
 ga.addAggregate('COUNT');
 ga.addAggregate('MIN','sys_created_on');
 ga.addAggregate('MAX','sys_created_on');
