@@ -63,6 +63,16 @@ if (current.state == 6 && current.close_notes == '') {
     current.setAbortAction(true);
 }
 
+//When state chnages note it down in sd states that state is chnages from previous to current state
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	if(current.state.changes()){
+		current.short_description = "The state chnages from"+ previous.state+"to"+ current.state;
+	}
+
+})(current, previous);
+
 //------------------------------------------------------------
 
 // Q5. Auto-populate "Opened by" with logged-in user.
@@ -86,19 +96,58 @@ if (current.category == 'software') {
 // Q7. Automatically create a Change Task after creating a Change Request.
 // Use: AFTER INSERT BR (to create related records)
 // Script:
+
+// Current Incident:
+
+// Number = INC001000
+
+// Sys_id = abc123
+
+//You create a new related incident:
 var task = new GlideRecord('change_task');
 task.initialize();
 task.change_request = current.sys_id;
 task.short_description = "Initial Review";
 task.insert();
 
+
+// INC001001 is a child
+// 👉 INC001000 is the parent
 // ------------------------------------------------------------
+
+//Async when incidnet created trigger email in the bakgroundd
+//gs.eventQueue(event_name, record, parm1, parm2);
+
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	gs.eventQueue('incident.updated',current,previous.priority,current.priority);
+
+})(current, previous);
+
+
+// Without passing current, the event would have NO idea:
+// Which incident was updated
+// What fields it has
+// Who to send to
+// So current is required so the event knows which record triggered the event.
+
+//after ths need to create the eventregistrty and notification
 
 // Q8. Send notification only when Assignment Group changes.
 // Use: AFTER UPDATE BR + Event
 // Script:
 if (current.assignment_group.changes()) {
     gs.eventQueue("assignment.group.changed", current, current.assignment_group, previous.assignment_group);
+}
+
+if (current.assignment_group.changes()) {
+gs.eventQueue(
+    'incident.assignment.changed',
+    current,
+    previous.assignment_group,
+    current.assignment_group
+);
 }
 
 // Notification: Trigger on event "assignment.group.changed".

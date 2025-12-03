@@ -109,3 +109,25 @@ function onLoad() {
    }
    
 }
+
+//--------------------
+// When ShortDescription is emppty Preven submitting
+function onSubmit() {
+   //Type appropriate comment here, and begin script below
+   if(g_form.getValue('assignment_group')==''){
+	alert("Please fill the short Description");
+	return false;
+   }
+   return true;
+   
+}
+//prevent when category is hardware and assignement group is empty
+function onSubmit() {
+   //Type appropriate comment here, and begin script below
+   if(g_form.getValue('category')=='hardware'&& !g_form.getValue('assignment_group')){
+	alert("Plese fill the assgment group");
+	return false;
+   }
+   return true;
+   
+}
