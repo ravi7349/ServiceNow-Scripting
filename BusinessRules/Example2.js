@@ -175,15 +175,10 @@ gs.eventQueue(
 // Examples:
 
 // Auto-assign group
-
 // Auto-fill short description
-
 // Enforce rules (priority cannot downgrade)
-
 // Clean phone numbers
-
 // Validate mandatory fields
-
 // Key idea:
 
 // 🟩 BEFORE = Prepare the record before saving.

@@ -25,3 +25,12 @@ function onLoad() {
    }
    
 }
+
+//if category == incquiry make disable attachement button
+function onLoad() {
+   //Type appropriate comment here, and begin script below
+   if(g_form.getValue('category')=='inquiry'){
+	g_form.setAttachmentsEnabled(false);
+   }
+   
+}
