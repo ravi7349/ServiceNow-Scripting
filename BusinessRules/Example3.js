@@ -65,7 +65,7 @@ function onLoad() {
 
 // ✅ Example 3: When all child tasks are closed → close the Problem (reverse logic)
 
-Direction: child → parent
+//Direction: child → parent
 
 (function executeRule(current, previous) {
 
