@@ -118,9 +118,115 @@ while(gr.next()){
 	gs.info(gr.number);
 }
 
+// to get the users and groups
+var gr = new GlideRecord('sys_user_group');
+gr.addQuery('name','ITSM App-Dev');
+gr.query();
+if(gr.next()){
+	var wr = new GlideRecord('sys_user_grmember');
+	wr.addQuery('group',gr.sys_id);
+	wr.query();
+	while(wr.next()){
+		gs.info(wr.user.name);
+	}
+}
+
+// Close all the incidents which have no updates last week.
+
+var lastweek = new GlideDateTime();
+lastweek.addDaysUTC(-7);
+var gr = new GlideRecord('incident');
+gr.addQuery('sys_created_on','<', lastweek);
+gr.query();
+while(gr.next()){
+	gr.state = 7;
+	gr.update();
+	gs.info("Succcess");
+}
+
 //DIff bw two times
 
 var time1 = new GlideDateTime("2025-01-01 10:30:00");
 var time2 = new GlideDateTime("2025-01-01 15:34:30");
 var dif = GlideTime.subtract(time1,time2);
 gs.print(dif.getDisplayValue());
+
+
+var data = {
+    "id": "0001",
+    "type": "donut",
+    "name": "Cake",
+    "ppu": 0.55,
+    "batters": {
+        "batter": [{
+            "id": "1001",
+            "type": "Regular"
+        }, {
+            "id": "1002",
+            "type": "Chocolate"
+        }, {
+            "id": "1003",
+            "type": "Blueberry"
+        }, {
+            "id": "1004",
+            "type": "Devil's Food"
+        }]
+    },
+    "topping": [{
+        "id": "5001",
+        "type": "None"
+    }, {
+        "id": "5002",
+        "type": "Glazed"
+    }, {
+        "id": "5005",
+        "type": "Sugar"
+    }, {
+        "id": "5007",
+        "type": "Powdered Sugar"
+    }, {
+        "id": "5006",
+        "type": "Chocolate with Sprinkles"
+    }, {
+        "id": "5003",
+        "type": "Chocolate"
+    }, {
+        "id": "5004",
+        "type": "Maple"
+    }]
+};
+
+gs.print(data.batters.batter[2].id);
+gs.print(data.batters.batter[2].type);
+gs.print(data.topping[1].id);
+gs.print(data.topping[1].type);
+gs.print(data.topping[2].id);
+gs.print(data.topping[2].type);
+
+var data = {
+	"id": "0001",
+	"type": "donut",
+	"name": "Cake",
+	"ppu": 0.55,
+	"batters":
+		{
+			"batter":
+				[
+					{ "id": "1001", "type": "Regular" },
+					{ "id": "1002", "type": "Chocolate" },
+					{ "id": "1003", "type": "Blueberry" },
+					{ "id": "1004", "type": "Devil's Food" }
+				]
+		},
+	"topping":
+		[
+			{ "id": "5001", "type": "None" },
+			{ "id": "5002", "type": "Glazed" },
+			{ "id": "5005", "type": "Sugar" },
+			{ "id": "5007", "type": "Powdered Sugar" },
+			{ "id": "5006", "type": "Chocolate with Sprinkles" },
+			{ "id": "5003", "type": "Chocolate" },
+			{ "id": "5004", "type": "Maple" }
+		]
+};
+gs.print(data.batters.batter[3].type);
