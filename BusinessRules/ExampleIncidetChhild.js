@@ -93,3 +93,14 @@ while (ct.next()) {
     ct.priority = current.priority;
     ct.update();
 }
+// to create the incident in task table
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	var task = new GlideRecord('change_task');
+	task.initialize();
+	task.short_description = "The Automated task for this" + current.number;
+	task.change_request = current.sys_id;
+	task.insert();
+
+})(current, previous);

@@ -74,3 +74,53 @@ while(gr.next()){
 	}
 }
 
+//how many incidnets are there in partivular assigment group
+
+var gr = new GlideRecord('sys_user_group');
+gr.addQuery('name', 'Hardware');
+gr.query();
+while (gr.next()) {
+    var wr = new GlideRecord('incident');
+    wr.addQuery('assignment_group', gr.sys_id);
+    wr.query();
+    while(wr.next()){
+		gs.info(wr.number);
+	}
+}
+//or 
+
+var gr  = new GlideRecord('incident');
+gr.addQuery('assignment_group.name','HardWare');
+gr.query();
+while(gr.next()){
+	gs.info(gr.number);
+}
+
+
+// to count the number of incident in particular user
+var gr = new GlideRecord('sys_user');
+gr.addQuery('name', 'ITIL User');
+gr.query();
+if (gr.next()) {
+	var wr = new GlideRecord('incident');
+	wr.addQuery('assigned_to',gr.sys_id);
+	wr.query();
+	while(wr.next()){
+		gs.info(wr.number);
+	} 
+}
+
+// to get no of incidents in assigned to user
+var gr = new GlideRecord('incident');
+gr.addQuery('assigned_to.name','ITIL User');
+gr.query();
+while(gr.next()){
+	gs.info(gr.number);
+}
+
+//DIff bw two times
+
+var time1 = new GlideDateTime("2025-01-01 10:30:00");
+var time2 = new GlideDateTime("2025-01-01 15:34:30");
+var dif = GlideTime.subtract(time1,time2);
+gs.print(dif.getDisplayValue());
