@@ -3,7 +3,7 @@
 
 //When state of the incident chnages toon hold then workotes filed shoold mandotoryy
 
-ontrol
+//control
 
 // The field UI element that triggered the onChange event.
 // oldValue
@@ -72,7 +72,6 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
 	else{
 		g_form.setMandatory('assignment_group',false);
 	}
-
     //Type appropriate comment here, and begin script below
 
 }

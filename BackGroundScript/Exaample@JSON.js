@@ -11,7 +11,7 @@ gs.info(body);
  }
 
  //for getting highest total
- var body = '{"students":[{"name":"Likhitha","marks":88},{"name":"Deepika","marks":92},{"name":"Nithya","marks":85}]}';
+var body = '{"students":[{"name":"Likhitha","marks":88},{"name":"Deepika","marks":92},{"name":"Nithya","marks":85}]}';
 var objData = JSON.parse(body);
 var max = 0;
 var name= "";
@@ -19,7 +19,6 @@ for(i = 0;i<objData.students.length;i++){
 	if(max<objData.students[i].marks){
 		max = objData.students[i].marks;
 		name = objData.students[i].name;
-	}
-	
+	}	
 }
 gs.info(name);
