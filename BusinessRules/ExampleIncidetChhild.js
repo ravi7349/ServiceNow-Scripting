@@ -14,21 +14,25 @@ while (child.next()) {
     child.update();
 }
 
-// ✅ Example 2: Incident → Incident Tasks (task table = incident_task)
+//  Example 2: Incident → Incident Tasks (task table = incident_task)
 
 // Child task table: incident_task
 // Relationship field: incident
 
 // Use case: When Incident priority changes → update all incident tasks.
 
-var t = new GlideRecord('incident_task');
-t.addQuery('incident', current.sys_id);
-t.query();
+(function executeRule(current, previous /*null when async*/) {
 
-while (t.next()) {
-    t.priority = current.priority;
-    t.update();
-}
+	// Add your code here
+	var gr = new GlideRecord('incident_task');
+	gr.addQuery('universal_request',current.sys_id);
+	gr.query();
+	while(gr.next()){
+		gr.short_description = current.short_description;
+		gr.update();
+	}
+
+})(current, previous);
 
 // 🟩 PROBLEM MODULE
 // ✅ Example 1: Parent Problem → Child Problems (same table)
@@ -37,14 +41,14 @@ while (t.next()) {
 
 // Use case: Update child problem priority.
 
-var child = new GlideRecord('problem');
-child.addQuery('parent', current.sys_id);
-child.query();
+// var child = new GlideRecord('problem');
+// child.addQuery('parent', current.sys_id);
+// child.query();
 
-while (child.next()) {
-    child.priority = current.priority;
-    child.update();
-}
+// while (child.next()) {
+//     child.priority = current.priority;
+//     child.update();
+// }
 
 // ✅ Example 2: Problem → Problem Tasks (task table = problem_task)
 

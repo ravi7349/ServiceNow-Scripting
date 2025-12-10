@@ -8,9 +8,26 @@ if(current.work_notes.changes()){
 	child.addQuery('parent_incident',current.sys_id);
 	child.query();
 	while(child.next()){
-		child.work_notes.setJournalEntry(current.work_notes);
+		child.work_notes = current.work_notes;
+		child.update();
 	}
 } 
+
+// 2 If the parent shortdescrition changes child sholid update parent short descption
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	if(current.short_description.changes()){
+		var gr = new GlideRecord('incident');
+		gr.addQuery('parent_incident',current.sys_id);
+		gr.query();
+		while(gr.next()){
+			gr.short_description = current.short_description;
+			gr.update();
+		}
+	}
+
+})(current, previous);
 // 3. Whenever a new Incident is created, the system should automatically create two child
 // incidents linked to it.
 
@@ -20,22 +37,24 @@ if (!current.parent_incident) {
     child.short_description = current.short_description + "( Descriptionn)";
     child.insert();
 }
-
-
 (function executeRule(current, previous /*null when async*/) {
 
 	// Add your code here
-	for( var i = 1;i<=3;i++){
+	
 		if(!current.parent_incident){
-		var child = new GlideRecord('incident');
-		child.initialize();
-		child.parent_incident = current.sys_id;
-		child.short_description = current.short_description+ "-child"+i;
-		child.insert();
+		for(i = 0;i<=3;i++){
+		var gr = new GlideRecord('incident');
+		gr.initialize();
+		gr.parent_incident = current.sys_id;
+		gr.short_description = current.short_description+" child "+ i;
+		gr.insert();
+		
 	}
 	}
 
 })(current, previous);
+
+
 
 
 Scenario:
@@ -73,14 +92,15 @@ if(current.priority==1){
 //When the parent state closes try to change the state in child 
 (function executeRule(current, previous /*null when async*/) {
 
-	// Add your
-	if(current.state.changes()&&current.state==7){
-		var child = new GlideRecord('incident');
-		child.addQuery('parent_incident','current.sys_id');
+	// Add your code here
+	if(current.state.changes()&& current.state==7){
+		var child= new GlideRecord('incident');
+		child.addQuery('parent_incident',current.sys_id);
 		child.query();
 		while(child.next()){
 			child.state = 7;
-			child.work_notes = "Closing because of changing the parent incident";
+			child.close_notes = "Closed because parent incident closed";
+			child.close_code ="Resolved by request";
 			child.update();
 		}
 	}
