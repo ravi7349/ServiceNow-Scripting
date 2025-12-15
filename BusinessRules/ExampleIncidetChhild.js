@@ -73,14 +73,14 @@ while (pt.next()) {
 
 // Use case: Update all child changes when parent description changes.
 
-var child = new GlideRecord('change_request');
-child.addQuery('parent', current.sys_id);
-child.query();
+// var child = new GlideRecord('change_request');
+// child.addQuery('parent', current.sys_id);
+// child.query();
 
-while (child.next()) {
-    child.short_description = current.short_description;
-    child.update();
-}
+// while (child.next()) {
+//     child.short_description = current.short_description;
+//     child.update();
+// }
 
 // ✅ Example 2: Change Request → Change Tasks (task table = change_task)
 
@@ -106,5 +106,23 @@ while (ct.next()) {
 	task.short_description = "The Automated task for this" + current.number;
 	task.change_request = current.sys_id;
 	task.insert();
+
+})(current, previous);
+
+
+//when child incident SD changes parent shortDescription sholid changes
+(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	var parent = current.parent_incident.getValue();
+	if(parent){
+		var gr = new GlideRecord('incident');
+		gr.addQuery('sys_id',parent);
+		gr.query();
+		while(gr.next()){
+			gr.short_description = current.short_description;
+			gr.update();
+		}
+	}
 
 })(current, previous);
